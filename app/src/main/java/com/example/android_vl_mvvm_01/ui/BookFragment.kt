@@ -26,15 +26,26 @@ class BookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        updateView()
+        //updateView()
+        addObservers()
 
         viewBinding.btNextPage.setOnClickListener {
             viewModel.nextChapter()
-            updateView()
+           // updateView()
         }
     }
 
-    private fun updateView() {
-        viewBinding.tvBookContent.text = viewModel.currentChapter.chapterTitle
+   // private fun updateView() {
+        //viewBinding.tvBookContent.text = viewModel.currentChapter.chapterTitle
+   // }
+
+    private fun addObservers() {
+        viewModel.currentChapter.observe(viewLifecycleOwner) { newCurrentChapter ->
+            viewBinding.tvBookContent.text = newCurrentChapter.chapterTitle
+        }
+
+        //viewModel.currentChapter.observe(viewLifecycleOwner) {
+        //    viewBinding.tvBookContent.text = it.chapterTitle
+        //}
     }
 }
